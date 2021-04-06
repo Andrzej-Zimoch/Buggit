@@ -1,0 +1,105 @@
+
+{% for i in project %}
+        
+        
+        <!-- Modal -->
+
+<div class="modal fade" id="{{ i.name }}BtnModal" role="dialog" tabindex="-1"  aria-labelledby="myModalaLabel" aria-hidden="true">
+    <div class="modal-dialog">
+    
+    <!-- Modal content-->
+    <div class="modal-content">
+        
+        <div  class="modal-header">
+        
+        <h4 class="modal-title">{{i.name}}</h4>
+        
+        </div>
+        <div class="modal-body">
+            <div class="container-fluid ">
+                <div class="row">
+                    <div class ="col">
+                        <div class="scrollable">
+                            <table>
+                        <thead>
+                            <tr >
+                                <th class='text-center'><h5>Description</h5></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th class="s_scrollable">
+                                {{i.description}}                                        
+                                </th>
+
+                            </tr>
+                            </tbody>
+                            </table>
+                            </div>
+                            
+                    </div>
+                    <div class ="col">
+                        
+                        <div class="row'">
+                            Team : {{i.team}}
+                        </div>
+                        <div class="row'">
+                            Deadline : {{i.project_deadline}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-v1 text-center">
+                    <h4>Tickets</h4>
+                    
+                </div>
+
+                <div class="scrollable">
+                    <table>
+                        <thead>
+                            <tr >
+                                <th class='text-center'><h5>Name</h5></th>
+                                <th class='text-center'><h5>Assignee</h5></th>
+                                <th class='text-center'><h5>Deadline</h5></th>
+                                <th class='text-center'><h5>Status</h5></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                                {% for a in ticket %}
+                                    {% if a.project == i%}
+                                    <tr>
+                                        <th class="s_scrollable text-center">                                            
+                                            
+                                            <p> <button class="btn btn-outline-primary btn-sm " id="btn_ticket{{ a.name }}" type='button' data-toggle="modal" data-target="#modal_ticket{{ a.name }}" >{{ a.name }}</button></p>
+                                        </th>
+                                        <th class="s_scrollable text-center">   
+                                            <p>{{ a.assigned_member }}</p>
+                                        </th>
+                                        <th class="s_scrollable text-center">   
+                                            <p>{{ a.ticket_deadline }}</p>
+                                        </th>
+                                        <th class="s_scrollable text-center">   
+                                            <p>{{ a.status }}</p>
+                                        </th>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %} 
+                        </tbody>
+                    </table>
+                </div>
+
+                
+            </div>
+
+       
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+    
+    </div>
+</div>
+
+
+{% endfor %}

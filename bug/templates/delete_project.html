@@ -1,0 +1,29 @@
+
+{% load widget_tweaks %}
+
+<div class="modal fade"  role="dialog" tabindex="-1" id="modal"  aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog"> 
+      <div class="modal-content">
+        <form method="post" action="">
+          {% csrf_token %}
+        
+          <div class="modal-header">
+            <h3 class="modal-title">Delete Project</h3>
+            
+          </div>
+        
+          <div class="modal-body">
+            <p class="delete-text">Are you sure you want to delete project with title
+              <strong>{{ project.name }}</strong>?</p>
+          </div>
+        
+          <div class="modal-footer">
+            <button type="submit" id="delete-btn" class="btn btn-danger">Delete</button>
+          </div>
+        
+        </form>
+      </div>
+  </div> 
+</div>
+
+

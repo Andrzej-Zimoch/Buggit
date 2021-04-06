@@ -1,0 +1,25 @@
+{% load staticfiles %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="{% static '/css/bootstrap-5.0.0-beta1-dist/css/bootstrap.css' %}">
+<!-- drag and drop -->
+<script src="{% static 'css/bootstrap-5.0.0-beta1-dist/js/bootstrap.js' %}"></script>
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/jquery.bootstrap.modal.forms.js' %}"></script>
+</head>
+<body>
+
+<h1>Register your new account</h1>
+<p>Fill form below</p>
+<form action='.' method="post">
+    {% csrf_token %}
+    {{ user_form.as_p }}
+    {% csrf_token %}
+    <p><input type='submit' value="register"/>.</p>
+</form>
+</body>

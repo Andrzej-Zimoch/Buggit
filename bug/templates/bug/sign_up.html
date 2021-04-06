@@ -1,0 +1,34 @@
+{% load staticfiles %}
+{% load static %}
+{% load crispy_forms_tags %}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{% static '/css/bootstrap-5.0.0-beta1-dist/css/bootstrap.css' %}">
+
+  <script src="{% static 'css/bootstrap-5.0.0-beta1-dist/js/bootstrap.js' %}"></script>
+  <script src="{% static 'js/jquery.js' %}"></script>
+  <script src="{% static 'js/jquery.bootstrap.modal.forms.js' %}"></script>
+ 
+</head>
+<body class="bg-light text-dark">
+  <div class='mx-5 '>
+    <h2 class="display-1 text-center">Sign up Form</h2>
+    <form method="post">
+      {% csrf_token %}
+      {% for field in form %}
+      <div class="form-group">
+          {{ field.label_tag }}<br>
+          {{ field }}
+          {% if field.help_text %}
+            <small style="color: grey">{{ field.help_text }}</small>
+          {% endif %}
+          {% for error in field.errors %}
+            <p style="color: red">{{ error }}</p>
+          {% endfor %}
+      </div>
+      {% endfor %}
+      <button class = "btn btn-outline-success mt-3" type="submit">Sign up</button>
+    </form>
+  </div>
+</body>

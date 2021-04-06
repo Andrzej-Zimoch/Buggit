@@ -1,0 +1,68 @@
+{% load staticfiles %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="{% static '/css/bootstrap-5.0.0-beta1-dist/css/bootstrap.css' %}">
+<!-- drag and drop -->
+<script src="{% static 'css/bootstrap-5.0.0-beta1-dist/js/bootstrap.js' %}"></script>
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/jquery.bootstrap.modal.forms.js' %}"></script>
+
+</head>
+
+
+
+<body>
+    {%block title%} {% endblock %}
+    {% block content %} {% endblock %}
+    
+
+<div class="modal fade" tabindex="-1" role="dialog" id="modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content"></div>
+    </div>
+</div>
+
+
+       
+
+    
+
+
+      <script type="text/javascript">
+          $(document).ready(function() {
+      
+              $("#add-project").modalForm({
+                  formURL: "{% url 'add_project' %}"
+              });
+
+              $("#add-ticket").modalForm({
+                  formURL: "{% url 'add_ticket' %}"
+              });
+      
+          });
+      </script>
+
+      <script type="text/javascript">
+          // create book button
+        $("#add-project").modalForm({
+          modalID: "#modal-crud",
+          formURL: "/bug/add/"
+        });
+
+        $("#add-ticket").modalForm({
+          modalID: "#modal-crud",
+          formURL: "/bug/add_ticket/"
+        });
+
+      </script>
+</div>
+
+</body>
+
+
+</html>

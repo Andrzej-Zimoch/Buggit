@@ -1,0 +1,36 @@
+<div class="modal fade"  role="dialog" tabindex="-1" id="modal"  aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog"> 
+      <div class="modal-content">
+        
+<form method="post" action="">
+  {% csrf_token %}
+
+  <div class="modal-header">
+      <h5 class="modal-title">Create new Team</h5>
+      
+    </div>
+  
+    <div class="modal-body">
+      
+      <label for="{{ field.id_for_label }}">{{ form.name.label }}</label>
+      <p>{{form.name}}</p>
+      <label for="{{ field.id_for_label }}">{{ form.members.label }}</label>
+      <p>{{form.members}}</p>
+      
+      <label for="{{ field.id_for_label }}">{{ form.team_manager.label }}</label>
+      <p>{{ form.team_manager }}</p>
+     
+        
+      
+    </div>
+  
+    <div class="modal-footer">
+      
+      <button type="button" class="submit-btn btn btn-outline-primary">Add</button>
+    </div>
+  
+  </form>
+      </div>
+  </div> 
+</div>
+

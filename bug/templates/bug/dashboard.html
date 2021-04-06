@@ -1,0 +1,1222 @@
+{% load staticfiles %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<title>BUGGITO</title>
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="{% static '/css/bootstrap-5.0.0-beta1-dist/css/bootstrap.css' %}">
+<!-- drag and drop -->
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'css/bootstrap-5.0.0-beta1-dist/js/bootstrap.js' %}"></script>
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script src="{% static 'js/jquery.cookie.js' %}"></script>
+<script src="{% static 'js/jquery.bootstrap.modal.forxms.js' %}"></script>
+
+<script src="{% static 'js/modal.js' %}"></script>
+<script src="{% static 'js/util.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+
+
+
+
+<script>
+    $(document).ready(function() {
+        $('.scrollable').each(function() {
+            var caption = $(this).find('caption');
+            var th = $(this).find('th');
+            var captionHeight = caption.outerHeight(true);
+            var thHeight = th.outerHeight();
+            var totalHeight = captionHeight + thHeight;
+            caption.css({marginTop: '-' + totalHeight + 'px'});
+            $(this).css({marginTop: 'calc(' + captionHeight + 'px' + ' + 1em)'});
+        });
+    });
+</script>
+
+<style>
+    body {
+        margin: auto;
+        
+    }
+
+    .scrollable {
+        margin-bottom: 1em;
+        max-height: 35em;
+        overflow: auto;
+    }
+
+    .scrollable table {
+        border-spacing: 0;
+        margin-bottom: 0;
+        min-width: 100%;
+        width: max-content;
+    }
+
+    .scrollable caption {
+        font-size: smaller;
+        padding-bottom: 0.5em;
+        position: absolute;
+        text-align: left;
+        width: 35em;
+        z-index: 3;
+    }
+
+    .scrollable th, .scrollable td {
+        border-bottom: 1px solid gray;
+        max-width: 10em;
+        padding: 0.25em 0.5em;
+        vertical-align: top;
+    }
+
+    .scrollable th {
+        background: #ffffff;
+        position: sticky;
+        text-align: left;
+        top: 0;
+    }
+
+    .scrollable th:first-of-type, .scrollable td:first-of-type {
+        left: 0;
+        position: sticky;
+    }
+
+    .scrollable th:first-of-type {
+        z-index: 2;
+    }
+
+    .scrollable td:first-of-type {
+        background:#ffffff;
+        z-index: 1;
+    }
+</style>
+</head>
+
+
+
+<body>
+    
+    
+<!-- NOTIFICATION BELL ################################################################################################################33-->
+    
+   <div class="container">
+   
+    <div id="test">
+        
+    </div>
+    <div class="row mt-2 ">
+        <div class="col-sm-2  text-center">
+            <h6>Hello, {{ request.user.first_name }}</h6>
+            <h5>{{ request.user.profile.level }}</h5>
+            
+            
+            <h2>MENU</h2>
+            </br>
+            {% if request.user.profile.level == "admin" %}
+            <p class="btn btn-outline-primary m-1" id="btnClick1">USERS</p></br>
+            
+            {% endif %}
+            {% if request.user.profile.level == "manager" %}
+            <p class="btn btn-outline-primary m-1 " id="btnClick1">TEAMS</p></br>
+            <p class="btn btn-outline-primary m-1 " id="btnClick2">PROJECTS</p></br>
+            <p class="btn btn-outline-primary m-1" id="btnClick3">STATS</p>
+            {% endif %}
+            {% if request.user.profile.level == "standard" %}
+            <p class="btn btn-outline-primary m-1" id="btnClick1">PROJECTS</p></br>
+            <p class="btn btn-outline-primary m-1" id="btnClick2">TICKETS</p></br>
+            
+            {% endif %}
+            </br></br></br></br>
+            {% if request.user.is_authenticated %}
+            <a class="btn btn-outline-primary btn-sm" href=" {% url "logout" %}">Log out</a>
+            {% endif %}
+
+       
+        </div>
+        
+
+<!--############################# ADMIN ############################### -->       
+        {% if request.user.profile.level == "admin" %}
+            <div id="con_p" class="col-sm-10 ">
+                <!-- projekts -->
+                <div id="1">
+                            
+                        <div class="row ">
+                            <div class="col text-center"><h3 class="display-5">USERS</h3></div>
+                    </div>
+                    </br></br>
+                    
+                    <!-- lista rozwijana zmień ID inputu -->
+                    <button id="search_u" class="btn btn-outline-success btn-sm" type="button" name="button">Standard</button> 
+                    <button id="search_m" class="btn btn-outline-success btn-sm" type="button" name="button">Manager</button> 
+                    <p>
+                        <input type="text" id="myInput-s" onkeyup="Search_user()" placeholder="Search for users.." title="Type in a name">
+                        <!-- <input type="text" id="myInput-m" onkeyup="Search_manager()" placeholder="Search for managers.." title="Type in a name">  -->
+                    </p>
+
+                    <script>
+                        $("#search_u").click(function(){
+                            $('#myInput-s').val("");
+                            Search_manager();
+                            $('#myInput-s').attr('onkeyup', "Search_user()");
+                            $('#myInput-s').attr('placeholder', "Search for users..");
+                            
+                            
+                        })
+                        $("#search_m").click(function(){
+                            $('#myInput-s').val("");
+                            Search_user();
+                            $('#myInput-s').attr('onkeyup', "Search_manager()");
+                            $('#myInput-s').attr('placeholder', "Search for managers..");
+                            
+                            
+                        })
+                    </script>
+                    <div class="row  border"> 
+                        <div class="col text-center">
+                            <h5>STANDARD USERS</h5>
+                        </div>
+                        
+                        <div class="col text-center">
+                            <h5 >MANAGERS</h5>
+                        </div>
+                    </div>   
+                    <div class="row border scrollable"> 
+                        <div class="col text-center">
+                            <div id="standard_u">             
+                                {% for i in profile %}
+                                        {% if i.level == 'standard' %}
+                                        <div class="test">
+                                            <p><button id="change{{ i }}" class="pp btn btn-outline-success btn-sm" type="button" data-toggle="modal" data-target="#modal_change{{ i }}">{{ i }}</button></p>
+                                        </div>
+                                            
+                                        {% endif %}                                                    
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="col text-center">
+                            <div id="standard_m">             
+                                {% for i in profile %}
+                                        {% if i.level == 'manager' %}
+                                        <div class="test_m">
+                                            <p><button id="change{{ i }}" class="pp_m btn btn-outline-success btn-sm" type="button" data-toggle="modal" data-target="#modal_change{{ i }}">{{ i }}</button></p>
+                                            
+                                        </div>
+                                            
+                                        {% endif %}                                                    
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                    </div>   
+                    
+                    <!-- OKNO MODALNE DLA NADAWANIA STATUSU MENEDŻERA -->
+                    {% for i in profile %}
+                        
+                        <div class="modal fade" id="modal_change{{i}}" role="dialog" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                            
+                            <!-- Modal content-->
+                            <div class="modal-content text-center">
+                                <div class="modal-header">
+                                
+                                <h4 class="modal-title">{{i}}</h4>
+                                <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+                                </div>
+                                <div class="modal-body">
+                                    {% if i.level == 'standard' %}
+                                    <p>You are about to give {{ i }} manager status.</p>
+                                    {% endif %}
+                                    {% if i.level == 'manager' %}
+                                    <p>You are about to give {{ i }} standard status.</p>
+                                    {% endif %}
+                                    <p>Are you sure?</p>
+                                    
+                                </div>
+                                <div class="modal-footer">
+                                    <button id="save{{i}}" class="btn btn-success mr-auto" type="button" name="button" method="POST" >Yes</button>
+                                </div>
+                                
+                            </div>
+                            
+                            </div>
+                        </div>     
+                        
+                        {% endfor %}
+
+                        {% for i in profile %}
+                    <!-- AJAX call to change database -->
+                    <script>
+                        $(document).ready(function(){
+                            var csrftoken = $.cookie('csrftoken');
+                    
+                            function csrfSafeMethod(method) {
+                                // these HTTP methods do not require CSRF protection
+                                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+                                }                         
+                                            
+                            $("#save{{i}}").click(function(){
+                                var person = $(this).attr("id").substring(4);
+                                var change_person = [];
+                                change_person.push(person);
+                                
+                                data ={key1: person}
+                                    
+                                $.ajaxSetup({
+                                            beforeSend: function(xhr, settings) 
+                                            {
+                                                if (!csrfSafeMethod(settings.type) && !this.crossDomain) 
+                                                {
+                                                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                                                }
+                                            }
+                                            });
+                                $.ajax({
+                                        type: "post",
+                                        url: "{% url 'update_profile' %}",
+                                        data: data,
+                                        success: Reload(),
+                                        failure: function (data) 
+                                            {              
+                                            alert("error");                                                                                                                      
+                                            }  
+                                        }); 
+                                }); 
+                            });
+                    </script>
+                        {% endfor %}
+
+                    <script>
+                        function Search_user() {
+                            var input, filter, td, p, i, txtValue;
+                            input = document.getElementById("myInput-s");
+                            filter = input.value.toUpperCase();
+                            td = document.getElementById("standard_u");
+                            row = td.getElementsByClassName("test");
+                            for (i = 0; i < row.length; i++) {
+                                
+                                p = row[i].getElementsByClassName("pp")[0];
+                                
+                                txtValue = p.textContent || p.innerText;
+                                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                    row[i].style.display = "";
+                                    
+                                } else {
+                                    row[i].style.display = "none";
+                                }
+                            }
+                        }
+
+                        function Search_manager() {
+                            var input, filter, td, p, i, txtValue;
+                            input = document.getElementById("myInput-s");
+                            filter = input.value.toUpperCase();
+                            td = document.getElementById("standard_m");
+                            row = td.getElementsByClassName("test_m");
+                            for (i = 0; i < row.length; i++) {
+                                
+                                p = row[i].getElementsByClassName("pp_m")[0];
+                                
+                                txtValue = p.textContent || p.innerText;
+                                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                    row[i].style.display = "";
+                                    
+                                } else {
+                                    row[i].style.display = "none";
+                                }
+                            }
+                        }
+                        function Reload(){
+                            // don't cache ajax or content won't be fresh
+                            location.reload();
+                        }
+                        </script>
+
+                
+                        
+                            
+                        
+                      
+                    
+                </div>
+                
+            </div>
+        {% endif %}
+        
+<!--############################# MANAGER ############################### -->
+        {% if request.user.profile.level == "manager" %}
+        
+    
+        <div id="con_p" class="col-sm-10 ">
+            <!-- teams -->
+            <div id="1">                            
+                <div class="row ">
+                    <div class="col text-center"><h3 class="display-5">TEAMS</h3></div>
+                </div>
+                </br></br>
+                <div class="d-flex flex-row-reverse">
+                    <button id="add-team" class=" m-1 btn btn-outline-primary btn-sm" type="button" name="button">Add Team</button>      
+                    
+                </div>
+                
+                <div class="row text-center border"> 
+                {% for i in team %}
+                        {% if i.team_manager == request.user.profile %}
+                            <div class="team border col-sm-2 m-2">
+                                <h5>{{ i }}</h5>
+                                {% for a in i.members.all %}
+                                        <p>{{ a }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                {% endfor %}
+                </div>                
+            </div>
+            <!-- projects -->
+            <div id="2">
+                <div class="row ">
+                    <div class="col text-center"><h3 class="display-5">PROJECTS</h3></div>
+                </div>
+
+                
+
+                </br></br>
+                <div class="d-flex flex-row-reverse">
+                    
+                    <button id="add-project" class="m-1 btn btn-outline-primary btn-sm" type="button" name="button">Add Project</button>   
+                    <button id="add-ticket" class="m-1 btn btn-outline-primary btn-sm" type="button" name="button">Add Ticket</button>  
+                    <input type="text" id="myInput" onkeyup="Search()" placeholder="Search for projects.." title="Type in a title"> 
+                    
+                </div>
+                <div class="row border">
+                    <!-- <div class = "col-sm-1">
+                        <p> </p>
+                    </div> -->
+                    <div class ="col  text-center">
+                        <h4>Title</h4>
+                    </div>
+                    <div class ="col  text-center">
+                        <h4>Team</h4>
+                    </div>
+                    <div class ="col  text-center">
+                        <h4>Deadline</h4>
+                    </div>
+                    <div class ="col  text-center">
+                        <h4>Edit</h4>
+                    </div>
+                    <div class ="col  text-center">
+                        <h4>Delete</h4>
+                    </div>
+                </div>
+                <div class="row">
+                
+                    <!-- <div class = "text-center col-sm-1 border">
+                        {% for i in project %}
+                        <p><input type="checkbox" id="{{ i.name }}"></p>            
+                        {% endfor %}
+                    </div> -->
+                
+                    <div id="myCOL" class ="col border text-center min-vh-101">
+                        {% for i in project %}                                
+                                {% if request.user.profile == i.manager %}
+                                    <div class='row' id="row{{ i.name }}">
+                                        <div class="col">
+                                            <p> <button class="btn btn-outline-primary btn-sm mt-2" id="button{{ i.name }}" type='button' data-toggle="modal" data-target="#modal{{ i.name }}" >{{i.name}}</button></p>
+                                            
+                                        </div>
+                                        <div class="col">
+                                            <p class='mt-2'>{{ i.team }}</p>
+                                        </div>
+                                        <div class="col">
+                                            <p class='mt-2'>{{ i.project_deadline }}</p>   
+                                        </div>
+                                        <div class="col">
+                                            
+                                            <p> <button class="update-project btn btn-success btn-sm mt-2" type="button" name="button" data-form-url="{% url 'update_project' i.pk %}">O</button>  </p>   
+                                        </div>
+                                        <div class="col">
+                                            <p> <button class="delete-project btn btn-danger btn-sm mt-2" type='button' data-form-url="{% url 'delete_project' i.pk %}"  >X</button></p>
+                                        </div>
+                                    </div>
+                                {% endif %}                                
+                        {% endfor %}                          
+                    </div>
+                </div>
+            </div>
+
+
+            
+            <script>
+                function Search() {
+                    var input, filter, col, li, a, i, txtValue;
+                    input = document.getElementById("myInput");
+                    filter = input.value.toUpperCase();
+                    col = document.getElementById("myCOL");
+                    row = col.getElementsByClassName("row");
+                    for (i = 0; i < row.length; i++) {
+                        a = row[i].getElementsByClassName("col")[0];
+                        txtValue = a.textContent || a.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            row[i].style.display = "";
+                        } else {
+                            row[i].style.display = "none";
+                        }
+                    }
+                }
+                </script>
+
+
+            <div id="3">
+                <div class="row ">
+                    <div class="col text-center"><h3 class="display-5">STATS</h3></div>
+                    
+                </div>
+            </br></br></br>
+            <div class="row text-center border"> 
+                <div class="col">
+                    <div id="container">
+                        <h5 class="display-10 text-center">Tickets: Done to All ratio</h5>                            
+                        <canvas id="myChart1" class="w-100 h-100"></canvas>
+                        </div>
+                </div>
+                <div class="col">
+                    <div id="container">
+                        <h5 class="display-10 text-center">Projects per team</h5>
+                        <canvas id="myChart2" class="w-100 h-100"></canvas>
+                        </div>
+                </div>
+            </div>
+            <div class="row text-center border"> 
+                <div class="col">
+                    <div id="container text-center mt-2">
+                        <h5 class=" mt-2 text-center"> LOOK OUT! FIRST TO DEADLINE</h5>
+                        TICKET : <button class="btn btn-outline-primary btn-sm m-2 " id="btn_ticket{{ most_recent_ticket }}" type='button' data-toggle="modal" data-target="#modal_ticket{{ most_recent_ticket }}" >{{ most_recent_ticket }}</button>
+                        <div class="mv-2 text-center"> 
+                        PROJECT : <button class="btn btn-outline-primary btn-sm m-2" id="button{{most_recent_project}}" type='button' data-toggle="modal" data-target="#modal{{most_recent_project}}" >{{most_recent_project}}</button></div>
+                        </div>
+                </div>
+                
+            </div>
+            </div>
+        </div>
+        
+        <div id="target-modal">
+        {% for i in project %}
+        
+        
+                    <!-- Modal -->
+        
+            <div class="modal fade w-100" id="modal{{ i.name }}" role="dialog" tabindex="-1"  aria-labelledby="myModalaLabel" aria-hidden="true">
+                <div class="modal-dialog w-100">
+                
+                <!-- Modal content-->
+                <div class="modal-content">
+                    
+                    <div  class="modal-header">
+                    
+                    <h4 class="modal-title">{{i.name}}</h4>
+                    
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid ">
+                            <div class="row">
+                                <div class ="col">
+                                    <div class="scrollable">
+                                        <table>
+                                    <thead>
+                                        <tr >
+                                            <th class='text-center'><h5>Description</h5></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th class="s_scrollable">
+                                            {{i.description}}                                        
+                                            </th>
+    
+                                        </tr>
+                                        </tbody>
+                                        </table>
+                                        </div>
+                                        
+                                </div>
+                                <div class ="col">
+                                    
+                                    <div class="row'">
+                                        Team : {{i.team}}
+                                    </div>
+                                    <div class="row'">
+                                        Deadline : {{i.project_deadline}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row m-v1 text-center">
+                                <h4>Tickets</h4>
+                                
+                            </div>
+    
+                            <div class="scrollable">
+                                <table>
+                                    <thead>
+                                        <tr >
+                                            <th class='text-center'><h5>Name</h5></th>
+                                            <th class='text-center'><h5>Assignee</h5></th>
+                                            <th class='text-center'><h5>Deadline</h5></th>
+                                            <th class='text-center'><h5>Status</h5></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                            {% for a in ticket %}
+                                                {% if a.project == i%}
+                                                <tr>
+                                                    <th class="s_scrollable text-center">                                            
+                                                        
+                                                        <p> <button class="btn btn-outline-primary btn-sm " id="btn_ticket{{ a.name }}" type='button' data-toggle="modal" data-target="#modal_ticket{{ a.name }}" >{{ a.name }}</button></p>
+                                                    </th>
+                                                    <th class="s_scrollable text-center">   
+                                                        <p>{{ a.assigned_member }}</p>
+                                                    </th>
+                                                    <th class="s_scrollable text-center">   
+                                                        <p>{{ a.ticket_deadline }}</p>
+                                                    </th>
+                                                    <th class="s_scrollable text-center">   
+                                                        <p>{{ a.status }}</p>
+                                                    </th>
+                                                    </tr>
+                                                {% endif %}
+                                            {% endfor %} 
+                                    </tbody>
+                                </table>
+                            </div>
+    
+                            
+                        </div>
+    
+                   
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+                
+                </div>
+            </div>
+        
+         
+        {% endfor %}
+        </div>
+        {% endif %}
+    
+        <!-- data-toggle="modal" data-target="#modal{{ i.name }}" -->
+        
+<!--############################# STANDARD ############################### -->
+        {% if request.user.profile.level == "standard" %}
+        <div id="con_p" class="col-sm-10 ">
+            <!-- projekts -->
+            <div id="1">
+                        
+                    <div class="row ">
+                        <div class="col text-center"><h3 class="display-5">PROJECTS</h3></div>
+                        
+                    
+                    
+                    </div>
+                </br></br>
+                
+                <div class="row border"> 
+                    <div class ="col  text-center">
+                        <h4>TITLE</h4>
+                    </div>
+                    <div class ="col  text-center ">
+                        <h4>TEAM</h4>
+                    </div>
+                    <div class ="col  text-center">
+                        <h4>DEADLINE</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    
+                    
+                    
+                    <div class ="col border text-center min-vh-101">
+                        
+                        {% for i in project %}
+                       
+                        {% for a in  i.team.members.all %}
+
+
+                            
+                            {% if request.user.profile == a %}
+
+                            <div class="row">
+                                <div class ='col'>
+                                    <p> <button class="btn btn-outline-primary btn-sm mt-2" id="button{{ i.name }}" type='button' data-toggle="modal" data-target="#modal{{ i.name }}" >{{i.name}}</button></p>
+                                </div>
+                                <div class="col">
+                                    <p>{{ i.team }}</p>
+                                </div>
+                                <div class="col">
+                                    <p>{{ i.project_deadline }}</p>
+                                </div>
+                            </div>
+                            
+                            {% endif %}
+                        {% endfor %}
+                        {% endfor %}
+                    </div>                     
+                    
+                </div>
+            </div>
+            <!-- tickets -->
+            <div id="2">
+                <div class="row ">
+                    <div class="col text-center"><h3 class="display-5">TICKETS</h3></div>
+                </div>
+                </br></br>
+                <div class="d-flex flex-row-reverse">
+                    <!-- <button id="add-ticket" class="btn btn-outline-primary btn-sm mx-2 " type="button" name="button">Add Ticket</button> -->
+                    <button id="save_tickets" class="btn btn-outline-primary btn-sm " type="button" name="button" method="POST" >Save</button>
+                </div>
+                <!-- <div class="row border"> 
+                    <div class ="col  text-center">
+                        <h4>To Do</h4>
+                    </div>
+                    <div class ="col  text-center">
+                        <h4>In Progress</h4>
+                    </div>
+                    <div class ="col  text-center">
+                        <h4>Done</h4>
+                    </div>                
+                </div> -->
+
+                
+
+
+                <div class="scrollable">
+                    <table class="table ">
+                        <thead>
+                            <tr >
+                                <th class='text-center'><h4>To Do</h4></th>
+                                <th class='text-center'><h4>In Progress</h4></th>
+                                <th class='text-center'><h4>Done</h4></th>
+                            </tr>
+                        </thead>
+                        <tbody class="table">
+                            <tr>
+                                <td style="width:30%" class="s_scrollable border text-center" id="To Do">                    
+                                    {% for i in ticket %}
+                                        {% if i.assigned_member == request.user.profile %}
+                                            {% if i.status == "To Do" %}
+                                            <div class="ticket border bg-light text-dark">
+                                                <h5 class="t_name">{{ i.name }}</h5>
+                                                <p> {{ i.project }}</p>
+                                                <p class='mb-1'>{{i.ticket_deadline}}</p>
+                                                <p> <button class="btn btn-outline-primary btn-sm " id="btn_ticket{{ i.name }}" type='button' data-toggle="modal" data-target="#modal_ticket{{ i.name }}" >Details</button></p>
+                                            </div>
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+                                </td>
+                
+                                <td style="width:30%" class="s_scrollable border text-center" id="In Progress">
+                                    {% for i in ticket %}
+                                        {% if i.assigned_member == request.user.profile %}
+                                            {% if i.status == "In Progress" %}
+                                            <div class="ticket border bg-light text-dark">
+                                                <h5 class="t_name">{{ i.name }}</h5>
+                                                <p> {{ i.project }}</p>                                                
+                                                <p class='mb-1'>{{i.ticket_deadline}}</p> 
+                                                <p> <button class="btn btn-outline-primary btn-sm " id="btn_ticket{{ i.name }}" type='button' data-toggle="modal" data-target="#modal_ticket{{ i.name }}" >Details</button></p>                                               
+                                            </div>
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}         
+                                </td>
+                
+                                <td style="width:30%" class="s_scrollable border text-center" id="Done">
+                                    {% for i in ticket %}
+                                        {% if i.assigned_member == request.user.profile %}
+                                            {% if i.status == "Done" %}
+                                            <div class="ticket border bg-light text-dark">
+                                                <h5 class="t_name">{{ i.name }}</h5>
+                                                <p> {{ i.project }}</p>
+                                                <p class='mb-1'>{{i.ticket_deadline}}</p>
+                                                <p> <button class="btn btn-outline-primary btn-sm " id="btn_ticket{{ i.name }}" type='button' data-toggle="modal" data-target="#modal_ticket{{ i.name }}" >Details</button></p>
+                                                
+                                            </div>
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div id="target-modal">
+            {% for i in project %}
+            
+            
+                        <!-- Modal -->
+            
+                <div class="modal fade w-100" id="modal{{ i.name }}" role="dialog" tabindex="-1"  aria-labelledby="myModalaLabel" aria-hidden="true">
+                    <div class="modal-dialog w-100">
+                    
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        
+                        <div  class="modal-header">
+                        
+                        <h4 class="modal-title">{{i.name}}</h4>
+                        
+                        </div>
+                        <div class="modal-body">
+                            <div class="container-fluid ">
+                                <div class="row">
+                                    <div class ="col">
+                                        <div class="scrollable">
+                                            <table>
+                                        <thead>
+                                            <tr >
+                                                <th class='text-center'><h5>Description</h5></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th class="s_scrollable">
+                                                {{i.description}}                                        
+                                                </th>
+        
+                                            </tr>
+                                            </tbody>
+                                            </table>
+                                            </div>
+                                            
+                                    </div>
+                                    <div class ="col">
+                                        
+                                        <div class="row'">
+                                            Team : {{i.team}}
+                                        </div>
+                                        <div class="row'">
+                                            Deadline : {{i.project_deadline}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row m-v1 text-center">
+                                    <h4>Tickets</h4>
+                                    
+                                </div>
+        
+                                <div class="scrollable">
+                                    <table>
+                                        <thead>
+                                            <tr >
+                                                <th class='text-center'><h5>Name</h5></th>
+                                                <th class='text-center'><h5>Assignee</h5></th>
+                                                <th class='text-center'><h5>Deadline</h5></th>
+                                                <th class='text-center'><h5>Status</h5></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                                {% for a in ticket %}
+                                                    {% if a.project == i%}
+                                                    {% if a.assigned_member == request.user.profile%}
+                                                    <tr>
+                                                        <th class="s_scrollable text-center">                                            
+                                                            
+                                                            <p> <button class="btn btn-outline-primary btn-sm " id="btn_ticket{{ a.name }}" type='button' data-toggle="modal" data-target="#modal_ticket{{ a.name }}" >{{ a.name }}</button></p>
+                                                        </th>
+                                                        <th class="s_scrollable text-center">   
+                                                            <p>{{ a.assigned_member }}</p>
+                                                        </th>
+                                                        <th class="s_scrollable text-center">   
+                                                            <p>{{ a.ticket_deadline }}</p>
+                                                        </th>
+                                                        <th class="s_scrollable text-center">   
+                                                            <p>{{ a.status }}</p>
+                                                        </th>
+                                                        </tr>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %} 
+                                        </tbody>
+                                    </table>
+                                </div>
+        
+                                
+                            </div>
+        
+                       
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    
+                    </div>
+                </div>
+            
+            
+            {% endfor %}
+            </div>
+
+        {% endif %}
+    </div>
+   </div>
+   
+  
+   {% for i in ticket %}
+       
+      
+   <div class="modal fade" id="modal_ticket{{ i.name }}" role="dialog" tabindex="-1"  aria-labelledby="myModalLabel" aria-hidden="true">
+       <div class="modal-dialog">        
+           <!-- Modal content-->
+           <div class="modal-content">
+               <div class="modal-header">
+               
+               <h4 class="modal-title col text-center">{{i.name}}</h4>
+               <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+               </div>
+
+               <div class="modal-body">
+                   <div class="container-fluid ">
+                       <div class="row">
+                           <div class="col  text-center">PROJECT: {{ i.project }}</div>
+                           <div class="col  text-center">DEADLINE: {{ i.ticket_deadline }}</div>
+                       </div>
+                       <div class="row m-5 bg-light text-dark">
+                           <div class="col  text-center">Description</div>
+                       </div>
+                       <div class="row">
+                           <div class="col  text-center">{{ i.description }}</div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
+   {% endfor %}   
+   
+
+
+<div>
+
+
+    
+
+    
+    <div class="modal fade" tabindex="-1" role="dialog" id="modal">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content"></div>
+        </div>
+      </div>
+      {% for i in ticket %}
+        <script>
+        $('#btn_ticket{{ i.name }}').click(function(){
+            $('#modal_ticket{{ i.name }}').modal();
+            console.log("test");
+        })
+        </script>
+      {% endfor %}
+     
+      <script type="text/javascript">
+          $(document).ready(function() {
+              
+            $("#add-team").modalForm({
+                formURL: "{% url 'add_team' %}"
+              });
+            
+            $("#add-project").modalForm({
+                formURL: "{% url 'add_project' %}"
+              });          
+
+
+            $("#add-ticket").modalForm({
+                formURL: "{% url 'add_ticket' %}"
+              });
+      
+          });
+      </script>
+
+
+
+   
+
+      
+
+      <script type="text/javascript">
+      $("#add-team").modalForm({
+          modalID: "#modal-crud",
+          formURL: "/bug/add_team/"
+        });
+          
+        $("#add-project").modalForm({
+          modalID: "#modal-crud",
+          formURL: "/bug/add/"
+        });
+
+        $("#add-ticket").modalForm({
+          modalID: "#modal-crud",
+          formURL: "/bug/add_ticket/"
+        });
+
+        function deleteProjectModalForm() {
+            $(".delete-project").each(function () {
+                $(this).modalForm({formURL: $(this).data("form-url"), isDeleteForm: true});
+            });
+          }
+          deleteProjectModalForm();
+
+          var asyncSuccessMessageUpdate = [
+            "<div ",
+            "style='position:fixed;top:0;z-index:10000;width:100%;border-radius:0;' ",
+            "class='alert alert-icon alert-success alert-dismissible fade show mb-0' role='alert'>",
+            "Success: Book was updated.",
+            "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>",
+            "<span aria-hidden='true'>&times;</span>",
+            "</button>",
+            "</div>",
+            "<script>",
+            "$('.alert').fadeTo(2000, 500).slideUp(500, function () {$('.alert').slideUp(500).remove();});",
+            "<\/script>"
+          ].join("");
+
+          function updateProjectModalForm() {
+            $(".update-project").each(function () {
+              $(this).modalForm({
+                formURL: $(this).data("form-url"),
+                asyncUpdate: true,
+                asyncSettings: {
+                  closeOnSubmit: false,
+                  successMessage: asyncSuccessMessageUpdate,
+                  
+                  addModalFormFunction: reinstantiateModalForms
+                }
+              });
+            });
+          }
+          updateProjectModalForm();
+
+          function reinstantiateModalForms() {
+            
+            updateProjectModalForm();
+            deleteProjectModalForm();
+          }
+       
+       
+      </script>
+<!-- change div content -->
+{% block content %}
+    <script>
+        
+        $('#2').hide();
+        $('#3').hide();
+        $('#btnClick1').on('click',function(){        
+                
+                $('#2').fadeOut(1000);
+                $('#2').hide();
+                $('#3').fadeOut(1000);
+                $('#3').hide();  
+                $('#1').fadeIn(1000); 
+                $('#1').show();     
+        });
+        $('#btnClick2').on('click',function(){        
+                
+                $('#1').fadeOut(1000);
+                $('#1').hide();
+                $('#3').fadeOut(1000);
+                $('#3').hide();
+                $('#2').fadeIn(1000);
+                $('#2').show();
+                
+                       
+        });
+
+        $('#btnClick3').on('click',function(){        
+                
+                $('#2').fadeOut(1000);
+                $('#2').hide();
+                $('#1').fadeOut(1000);                 
+                $('#1').hide();
+                $('#3').fadeIn(1000);
+                $('#3').show();
+                setTimeout(function() {
+                    
+                // ############################## MANAGER STATS GRAPHS ################################################################
+                //  CHART 1 
+                
+                var ctx = document.getElementById('myChart1');
+                var myChart = new Chart(ctx, {
+                type: 'bar',
+                data:
+                    {
+                        
+                        datasets: [{
+                                    label: 'All Tickets',
+                                    data: {{ tickets_all|safe }},
+                                    backgroundColor: {{ ticket_colors_1|safe }},
+                                    borderColor: {{ ticket_colors_1|safe }},
+                                    borderWidth: 1
+                                    },
+                                    {
+                                    label: 'Tickets "Done"',
+                                    data: {{ tickets_done|safe }},
+                                    backgroundColor: {{ ticket_colors_2|safe }},
+                                    borderColor: {{ ticket_colors_2|safe }},
+                                    borderWidth: 1
+                                    }],
+                        labels:  {{ labels|safe }} 
+                    
+                    
+                    },
+                    options: 
+                            {
+                        scales: {
+                            yAxes: 
+                                [{
+                                ticks: 
+                                    {
+                                        beginAtZero: true
+                                    }
+                                }]
+                                }
+                            }
+                });
+                //  CHART 2 
+                
+                var ctx = document.getElementById('myChart2');
+                var myChart = new Chart(ctx, {
+                type: 'doughnut',
+                data:
+                    {
+                        
+                        datasets: [{
+                                    label: 'Projects',
+                                    data: {{ data_2|safe }},
+                                    backgroundColor:{{team_colors|safe}} ,
+                                    borderColor: {{team_colors|safe}} ,
+                                    borderWidth: 1
+                                    }],
+                                    
+                                    
+                        labels: {{ labels_2|safe }} 
+                    
+                    
+                    },
+                    options: 
+                            {
+                        scales: {
+                            yAxes: 
+                                [{
+                                ticks: 
+                                    {
+                                        beginAtZero: true
+                                    }
+                                }]
+                                }
+                            }
+                });
+                // opóźnienie 
+                }, 300);
+                
+                            
+                                
+        });
+    </script>
+    {% endblock %}
+
+    <script>
+    $(document).ready(function(){
+        
+        var ticket_list = [];
+        $('.ticket border').each(function()
+        {               
+            ticket_list.push({key: $(this).children(".t_name").text(), value: $(this).parent().attr('id')});
+        });
+        // console.log(ticket_list);
+
+        var csrftoken = $.cookie('csrftoken');
+
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+            }
+
+        $('.s_scrollable').sortable({
+            connectWith:'.s_scrollable',
+            
+        
+        }).disableSelection();  
+            
+        
+        $("#save_tickets").click(function(){
+            var new_ticket_list = [];
+            var new_ticket_id=[];
+            $('.ticket').each(function()
+            {                               
+                new_ticket_list.push($(this).children(".t_name").text());
+                new_ticket_id.push($(this).parent().attr('id'));
+            });
+
+            
+            data = {key_1_array: new_ticket_list,
+                    key_2_array: new_ticket_id}
+                    
+            $.ajaxSetup(
+                {
+                    beforeSend: function(xhr, settings) {
+                        if (!csrfSafeMethod(settings.type) && !this.crossDomain) 
+                        {
+                            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                        }
+                    }
+                });
+            $.ajax(
+                {
+                type: "post",
+                url: "{% url 'update_ticket' %}",
+                data: data,
+                success: function (data) 
+                    {
+                        alert(data);                                                           
+                    },
+                failure: function (data) 
+                    {              
+                    alert("error");                                                                                                                      
+                    }  
+                }); 
+        
+        
+            })
+        });
+</script>
+
+<script>
+    $('.s_scrollable').sortable({
+    items: ">*:not(.sort-disabled)"
+    });
+</script>
+<script>
+    $('.a_scrollable').sortable({
+    items: ">*:not(.sort-disabled)"
+    });
+</script>
+<script>
+  $('input[type="checkbox"]').on('change', function() {
+   $('input[type="checkbox"]').not(this).prop('checked', false);
+});
+</script>
+</div>
+</body>
+
+
+</html>

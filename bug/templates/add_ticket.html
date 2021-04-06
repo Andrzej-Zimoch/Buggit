@@ -1,0 +1,47 @@
+{% load staticfiles %}
+{% load static %}
+<head>
+
+  <script src="/static/smart-selects/admin/js/chainedfk.js"></script>
+<script src="/static/smart-selects/admin/js/bindfields.js"></script>
+</head>
+
+<div class="modal fade"  role="dialog" tabindex="-1" id="modal"  aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog"> 
+      <div class="modal-content">
+        
+<form method="post" action="">
+  {% csrf_token %}
+  {{ form.media.js }}
+  <div class="modal-header">
+      <h5 class="modal-title">Create new Ticket</h5>
+      
+    </div>
+  
+    <div class="modal-body">
+      <label for="{{ field.id_for_label }}">{{ form.project.label }}</label>
+      <p>{{form.project}}</p>
+      <label for="{{ field.id_for_label }}">{{ form.name.label }}</label>
+      <p>{{form.name}}</p>
+      <label for="{{ field.id_for_label }}">{{ form.description.label }}</label>
+      <p>{{form.description}}</p>
+      
+      <label for="{{ field.id_for_label }}">{{ form.assigned_team.label }}</label>
+      <p>{{form.assigned_team}}</p>
+      <label for="{{ field.id_for_label }}">{{ form.assigned_member.label }}</label>
+      <p>{{form.assigned_member}}</p>
+      <label for="{{ field.id_for_label }}">{{ form.ticket_deadline.label }}</label>
+      <p>{{form.ticket_deadline}}</p>
+          
+      
+    </div>
+  
+    <div class="modal-footer">
+      
+      <button type="button" class="submit-btn btn btn-outline-primary">Add</button>
+    </div>
+  
+  </form>
+      </div>
+  </div> 
+</div>
