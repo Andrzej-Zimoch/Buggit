@@ -13,11 +13,6 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 import os
 import environ
-env = environ.Env(
-    # set casting, default value
-    DEBUG=(bool, False)
-)
-# reading .env file
 environ.Env.read_env()
 import django_heroku
 
@@ -37,7 +32,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = '#uj(dj46%lqx5b%pz=ki(l!_g43$1!5p8o)n&8&$0&(3w%bh9i'
 # SECRET_KEY = os.environ['SECRET_KEY']
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
