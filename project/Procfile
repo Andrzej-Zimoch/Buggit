@@ -1,1 +1,1 @@
-web: gunicorn project.wsgi --log-file -
+web: python project/manage.py collectstatic --noinput; bin/gunicorn_django --workers=4 --bind=0.0.0.0:$PORT project/settings.py
