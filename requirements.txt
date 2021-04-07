@@ -13,6 +13,7 @@
 # click==7.1.2
 # colorama==0.4.3
 # cycler==0.10.0
+django-heroku==0.3.1
 django-environ==0.4.5
 certifi==2020.6.20
 celery==4.4.7
@@ -23,7 +24,8 @@ django-crispy-forms==1.11.0
 django-smart-selects==1.5.9
 django-widget-tweaks==1.4.2
 sqlparse==0.3.0
-
+whitenoise==5.2.0
+gunicorn==20.1.0
 # fdfgen==0.16.1
 # filelock==3.0.12
 # future==0.17.1
