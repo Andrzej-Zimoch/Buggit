@@ -15,7 +15,7 @@ import os
 import environ
 import django_heroku
 
-django_heroku.settings(locals())
+
 # Initialise environment variables
 env = environ.Env()
 environ.Env.read_env()
@@ -156,3 +156,4 @@ STATICFILES_DIRS = [
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 AUTH_PROFILE_MODULE = 'bug.Profile'
+django_heroku.settings(locals())
