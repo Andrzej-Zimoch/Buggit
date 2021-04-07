@@ -41,13 +41,13 @@ ALLOWED_HOSTS = ['buggito.herokuapp.com']
 
 EMAIL_USE_TLS = True
 
-EMAIL_HOST = os.environ.get['EMAIL_HOST']
+EMAIL_HOST = os.environ['EMAIL_HOST']
 
-EMAIL_HOST_USER = os.environ.get['EMAIL_HOST_USER']
+EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
 
-EMAIL_HOST_PASSWORD = os.environ.get['EMAIL_HOST_PASSWORD']
+EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
 
-EMAIL_PORT = os.environ.get['EMAIL_PORT']
+EMAIL_PORT = os.environ['EMAIL_PORT']
 # Application definition
 
 USE_DJANGO_JQUERY = True
