@@ -13,13 +13,15 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 import os
 import environ
+
+environ.Env.read_env()
 import django_heroku
 
 
 
-# Initialise environment variables
-env = environ.Env()
-environ.Env.read_env()
+# # Initialise environment variables
+# env = environ.Env()
+# environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -30,7 +32,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = '#uj(dj46%lqx5b%pz=ki(l!_g43$1!5p8o)n&8&$0&(3w%bh9i'
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = os.environ('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -39,13 +41,13 @@ ALLOWED_HOSTS = []
 
 EMAIL_USE_TLS = True
 
-EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_HOST = os.environ('EMAIL_HOST')
 
-EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_USER = os.environ('EMAIL_HOST_USER')
 
-EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_PASSWORD = os.environ('EMAIL_HOST_PASSWORD')
 
-EMAIL_PORT = env('EMAIL_PORT')
+EMAIL_PORT = os.environ('EMAIL_PORT')
 # Application definition
 
 USE_DJANGO_JQUERY = True
