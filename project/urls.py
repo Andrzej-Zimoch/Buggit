@@ -21,7 +21,7 @@ from django.urls import path,include,re_path
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('bug/',include('bug.urls')),    
-    path('buggito.herokuapp.com/',include('bug.urls')),
+    path('',include('bug.urls')),
     
     re_path('chaining/',include('smart_selects.urls')),
    
