@@ -2,7 +2,8 @@ from django import forms
 from .models import Project, Profile, Ticket,Team
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from bootstrap_modal_forms.forms import BSModalModelForm
+#from bootstrap_modal_forms.forms import BSModalModelForm
+from bootstrap_modal_forms.forms import *
 
 class SignUpForm(UserCreationForm):
     first_name = forms.CharField(max_length=100, help_text='First Name')
