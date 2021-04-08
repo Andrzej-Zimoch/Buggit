@@ -3,7 +3,7 @@ from .models import Project, Profile, Ticket,Team
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 #from bootstrap_modal_forms.forms import BSModalModelForm
-from bootstrap_modal_forms.forms import *
+import bootstrap_modal_forms 
 
 class SignUpForm(UserCreationForm):
     first_name = forms.CharField(max_length=100, help_text='First Name')
@@ -42,7 +42,7 @@ class UserRegistrationForm(forms.ModelForm):
 class DateInput(forms.DateInput):
     input_type = 'date'
 
-class AddProjectForm(BSModalModelForm):
+class AddProjectForm(bootstrap_modal_forms.forms.BSModalModelForm):
     
     class Meta:
         model = Project
@@ -55,7 +55,7 @@ class AddProjectForm(BSModalModelForm):
 
 
 
-class AddTicketForm(BSModalModelForm):
+class AddTicketForm(bootstrap_modal_forms.forms.BSModalModelForm):
     class Meta:
         model = Ticket
         fields = ['name','description','project','assigned_team','assigned_member','ticket_deadline']
@@ -63,7 +63,7 @@ class AddTicketForm(BSModalModelForm):
             'ticket_deadline': DateInput(attrs={'type': 'date'})
         }
 
-class AddTeamForm(BSModalModelForm):
+class AddTeamForm(bootstrap_modal_forms.forms.BSModalModelForm):
 
     class Meta:
         model = Team
