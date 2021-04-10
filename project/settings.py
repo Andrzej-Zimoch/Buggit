@@ -30,12 +30,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = '#uj(dj46%lqx5b%pz=ki(l!_g43$1!5p8o)n&8&$0&(3w%bh9i'
-# SECRET_KEY = os.environ['SECRET_KEY']
+
 SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+# DEBUG = os.environ['DEBUG_VAL']
+DEBUG = bool(os.environ.get("DEBUG_VAL", False))
+# DEBUG = False
 
 ALLOWED_HOSTS = ['buggito.herokuapp.com']
 
@@ -154,6 +155,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
