@@ -35,7 +35,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = os.environ['DEBUG_VAL']
-DEBUG = os.environ.get("DEBUG_VAL", False)
+DEBUG = bool(os.environ.get("DEBUG_VAL", False))
 # DEBUG = False
 
 ALLOWED_HOSTS = ['buggito.herokuapp.com']
