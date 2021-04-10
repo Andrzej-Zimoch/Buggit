@@ -53,7 +53,7 @@ EMAIL_PORT = os.environ['EMAIL_PORT']
 
 USE_DJANGO_JQUERY = True
 INSTALLED_APPS = [
-    'whitenoise.runserver_nostatic',
+    
     'bug.apps.BugConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'bootstrap_modal_forms',
     'crispy_forms',
     'widget_tweaks',
+    'whitenoise.runserver_nostatic',
     
 ]
 
@@ -80,7 +81,7 @@ MIDDLEWARE = [
 ]
 
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 ROOT_URLCONF = 'project.urls'
 
 TEMPLATES = [
@@ -156,14 +157,21 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 # STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 
 
 STATIC_URL = '/static/'
 
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'bug/static'),
+# ]
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'bug/static'),
+    os.path.join(BASE_DIR, 'static'),
 ]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
