@@ -51,5 +51,3 @@ urlpatterns = [
         views.activate, name='activate'),
 ] 
 
-from map.views import my_customized_server_error
-handler500 = my_customized_server_error
