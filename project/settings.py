@@ -14,7 +14,7 @@ from pathlib import Path
 import os
 import environ
 environ.Env.read_env()
-import django_heroku
+
 
 
 
@@ -217,7 +217,7 @@ LOGGING = {
 }
 
 
-
+import django_heroku
 django_heroku.settings(locals())
 
 
