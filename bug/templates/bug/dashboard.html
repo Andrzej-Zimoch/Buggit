@@ -99,41 +99,41 @@
 
 
 
-<body>
+<body class="bg-light">
     
     
 <!-- NOTIFICATION BELL ################################################################################################################33-->
     
-   <div class="container">
+<div class="container-xl ">
    
     <div id="test">
         
     </div>
-    <div class="row mt-2 ">
-        <div  class="col-sm-2 text-center">
-            <h6>Hello, {{ request.user.first_name }}</h6>
+    <div class="row ">
+        <div class="col-sm-2  text-center mw-100 vh-100 text-light" style="background-color: #495867">
+            <h6 class="mt-5">Hello, {{ request.user.first_name }}</h6>
             <h5>{{ request.user.profile.level }}</h5>
             
             
             <h2>MENU</h2>
             </br>
             {% if request.user.profile.level == "admin" %}
-            <p class="btn btn-outline-primary m-1" id="btnClick1">USERS</p></br>
+            <p class="btn btn-outline-light m-1" id="btnClick1">USERS</p></br>
             
             {% endif %}
             {% if request.user.profile.level == "manager" %}
-            <p class="btn btn-outline-primary m-1 " id="btnClick1">TEAMS</p></br>
-            <p class="btn btn-outline-primary m-1 " id="btnClick2">PROJECTS</p></br>
-            <p class="btn btn-outline-primary m-1" id="btnClick3">STATS</p>
+            <p class="btn btn-outline-light m-1 " id="btnClick1">TEAMS</p></br>
+            <p class="btn btn-outline-light m-1  " id="btnClick2">PROJECTS</p></br>
+            <p class="btn btn-outline-light m-1 " id="btnClick3">STATS</p>
             {% endif %}
             {% if request.user.profile.level == "standard" %}
-            <p class="btn btn-outline-primary m-1" id="btnClick1">PROJECTS</p></br>
-            <p class="btn btn-outline-primary m-1" id="btnClick2">TICKETS</p></br>
+            <p class="btn btn-outline-light m-1 " id="btnClick1">PROJECTS</p></br>
+            <p class="btn btn-outline-light m-1 " id="btnClick2">TICKETS</p></br>
             
             {% endif %}
             </br></br></br></br>
             {% if request.user.is_authenticated %}
-            <a class="btn btn-outline-primary btn-sm" href=" {% url "logout" %}">Log out</a>
+            <a class="btn btn-outline-light m-1 " href=" {% url "logout" %}">Log out</a>
             {% endif %}
 
        
@@ -356,7 +356,7 @@
             <!-- teams -->
             <div id="1">                            
                 <div class="row ">
-                    <div class="col text-center"><h3 class="display-5">TEAMS</h3></div>
+                    <div class="col text-center mt-2"><h3 class="display-5">TEAMS</h3></div>
                 </div>
                 </br></br>
                 <div class="d-flex flex-row-reverse">
@@ -367,7 +367,7 @@
                 <div class="row text-center border"> 
                 {% for i in team %}
                         {% if i.team_manager == request.user.profile %}
-                            <div class="team border col-sm-2 m-2">
+                            <div class="team border col-sm-2 m-2 " style="background-color: #ffffff" >
                                 <h5>{{ i }}</h5>
                                 {% for a in i.members.all %}
                                         <p>{{ a }}</p>
@@ -511,8 +511,8 @@
         
                     <!-- Modal -->
         
-            <div class="modal fade w-100" id="modal{{ i.name }}" role="dialog" tabindex="-1"  aria-labelledby="myModalaLabel" aria-hidden="true">
-                <div class="modal-dialog w-100">
+            <div class="modal fade" id="modal{{ i.name }}" role="dialog" tabindex="-1"  aria-labelledby="myModalaLabel" aria-hidden="true">
+                <div class="modal-dialog w-100  modal-lg">
                 
                 <!-- Modal content-->
                 <div class="modal-content">
@@ -1080,7 +1080,6 @@
                     },
                     options: 
                             {
-                              
                         scales: {
                             yAxes: 
                                 [{
@@ -1217,6 +1216,13 @@
 });
 </script>
 </div>
+   
+
+    
+
+
+    
+
 </body>
 
 

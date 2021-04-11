@@ -274,5 +274,7 @@ def update_profile(request):
             
         i.save() 
     return HttpResponse("Test update")
-        
+
+
+
     

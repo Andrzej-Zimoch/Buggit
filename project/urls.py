@@ -26,3 +26,4 @@ urlpatterns = [
     re_path('chaining/',include('smart_selects.urls')),
    
 ]
+
