@@ -31,35 +31,27 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-# SECRET_KEY = os.environ['SECRET_KEY']
-SECRET_KEY = '#uj(dj46%lqx5b%pz=ki(l!_g43$1!5p8o)n&8&$0&(3w%bh9i'
+SECRET_KEY = os.environ['SECRET_KEY']
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = os.environ['DEBUG_VAL']
 #DEBUG = bool(os.environ.get("DEBUG_VAL", False))
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['.herokuapp.com']
 
 EMAIL_USE_TLS = True
 
-# EMAIL_HOST = os.environ['EMAIL_HOST']
+EMAIL_HOST = os.environ['EMAIL_HOST']
 
-# EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
+EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
 
-# EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
+EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
 
-# EMAIL_PORT = os.environ['EMAIL_PORT']
+EMAIL_PORT = os.environ['EMAIL_PORT']
 
 
-
-EMAIL_HOST = 'smtp.gmail.com'
-
-EMAIL_HOST_USER = 'buggitoapp@gmail.com'
-
-EMAIL_HOST_PASSWORD = 'Agnieszka21!'
-
-EMAIL_PORT = 87
 # Application definition
 
 USE_DJANGO_JQUERY = True
