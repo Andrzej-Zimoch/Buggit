@@ -26,3 +26,5 @@ urlpatterns = [
     re_path('chaining/',include('smart_selects.urls')),
    
 ]
+from map.views import my_customized_server_error
+handler500 = my_customized_server_error
