@@ -38,7 +38,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 DEBUG = bool(os.environ.get("DEBUG_VAL", False))
 # DEBUG = False
 
-ALLOWED_HOSTS = ['buggito.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 EMAIL_USE_TLS = True
 
