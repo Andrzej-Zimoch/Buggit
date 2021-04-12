@@ -45,8 +45,9 @@
         
     }
 
-    .ticket {
-        background-color: #ffffff;
+    .ticket_total {
+        background-color: #8d255e;
+        color:#258d2a;
     }
 
     .scrollable {
@@ -79,7 +80,7 @@
     }
 
     .scrollable th {
-        background: #ffffff;
+        
         position: sticky;
         text-align: left;
         top: 0;
@@ -95,7 +96,7 @@
     }
 
     .scrollable td:first-of-type {
-        background:#ffffff;
+        
         z-index: 1;
     }
 </style>
@@ -705,7 +706,7 @@
                 <div class="scrollable">
                     <table class="table bg-light ">
                         <thead>
-                            <tr >
+                            <tr class="bg-light" >
                                 <th class='text-center'><h4>To Do</h4></th>
                                 <th class='text-center'><h4>In Progress</h4></th>
                                 <th class='text-center'><h4>Done</h4></th>
@@ -713,11 +714,11 @@
                         </thead>
                         <tbody class="table">
                             <tr>
-                                <td style="width:30%" class="s_scrollable border text-center" id="To Do">                    
+                                <td style="width:30%" class="s_scrollable border text-center " id="To Do">                    
                                     {% for i in ticket %}
                                         {% if i.assigned_member == request.user.profile %}
                                             {% if i.status == "To Do" %}
-                                            <div class="ticket border text-dark">
+                                            <div class="ticket border text-dark" style="background-color: #ffffff;">
                                                 <h5 class="t_name">{{ i.name }}</h5>
                                                 <p> {{ i.project }}</p>
                                                 <p class='mb-1'>{{i.ticket_deadline}}</p>
@@ -728,11 +729,11 @@
                                     {% endfor %}
                                 </td>
                 
-                                <td style="width:30%" class="s_scrollable border text-center" id="In Progress">
+                                <td style="width:30%" class="s_scrollable border text-center ticket_total" id="In Progress">
                                     {% for i in ticket %}
                                         {% if i.assigned_member == request.user.profile %}
                                             {% if i.status == "In Progress" %}
-                                            <div class="ticket border text-dark">
+                                            <div class="ticket border text-dark" style="background-color: #ffffff;">
                                                 <h5 class="t_name">{{ i.name }}</h5>
                                                 <p> {{ i.project }}</p>                                                
                                                 <p class='mb-1'>{{i.ticket_deadline}}</p> 
@@ -743,11 +744,11 @@
                                     {% endfor %}         
                                 </td>
                 
-                                <td style="width:30%" class="s_scrollable border text-center" id="Done">
+                                <td style="width:30%" class="s_scrollable border text-center ticket_total" id="Done">
                                     {% for i in ticket %}
                                         {% if i.assigned_member == request.user.profile %}
                                             {% if i.status == "Done" %}
-                                            <div class="ticket border text-dark">
+                                            <div class="ticket border text-dark" style="background-color: #ffffff;">
                                                 <h5 class="t_name">{{ i.name }}</h5>
                                                 <p> {{ i.project }}</p>
                                                 <p class='mb-1'>{{i.ticket_deadline}}</p>
