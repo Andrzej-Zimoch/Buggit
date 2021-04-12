@@ -7,20 +7,82 @@
     <meta charset="UTF-8">
     <title>BUGGITO</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{% static '/css/bootstrap-5.0.0-beta1-dist/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-5.0.0-beta1-dist/css/bootstrap.css' %}">
     <!-- drag and drop -->
-    <script src="{% static 'js/jquery.js' %}"></script>
-    <script src="{% static 'css/bootstrap-5.0.0-beta1-dist/js/bootstrap.js' %}"></script>
+    <script src="{% static  'js/jquery.js' %}"></script>
+    <script src="{% static  'css/bootstrap-5.0.0-beta1-dist/js/bootstrap.js' %}"></script>
 
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="{% static 'js/jquery.bootstrap.modal.forms.js' %}"></script>
-    <script src="{% static 'js/jquery.cookie.js' %}"></script>
+    <script src="{% static  'js/jquery.bootstrap.modal.forms.js' %}"></script>
+    <script src="{% static  'js/jquery.cookie.js' %}"></script>
 
 
-    <script src="{% static 'js/modal.js' %}"></script>
-    <script src="{% static 'js/util.js' %}"></script>
-    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static  'js/modal.js' %}"></script>
+    <script src="{% static  'js/util.js' %}"></script>
+    <script src="{% static  'js/popper.min.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    
+    <style>
+.pulsingButton {
+  width: 220px;
+  text-align: center;
+  white-space: nowrap;
+  display: block;
+  margin: 50px auto;
+  padding: 10px;
+  box-shadow: 0 0 0 0 rgba(0, 200, 81, 0.7);
+  border-radius: 10px;
+  
+  -webkit-animation: pulsing 1.25s infinite cubic-bezier(0.66, 0, 0, 1);
+  -moz-animation: pulsing 1.25s infinite cubic-bezier(0.66, 0, 0, 1);
+  -ms-animation: pulsing 1.25s infinite cubic-bezier(0.66, 0, 0, 1);
+  animation: pulsing 1.25s infinite cubic-bezier(0.66, 0, 0, 1);
+  font-size: 22px;
+  font-weight: normal;
+  font-family: sans-serif;
+  text-decoration: none !important;
+  
+  transition: all 300ms ease-in-out;
+}
+
+
+/* Comment-out to have the button continue to pulse on mouseover */
+
+a.pulsingButton:hover {
+  -webkit-animation: none;
+  -moz-animation: none;
+  -ms-animation: none;
+  animation: none;
+  
+}
+
+
+/* Animation */
+
+@-webkit-keyframes pulsing {
+  to {
+    box-shadow: 0 0 0 30px rgba(0, 200, 81, 0);
+  }
+}
+
+@-moz-keyframes pulsing {
+  to {
+    box-shadow: 0 0 0 30px rgba(0, 200, 81, 0);
+  }
+}
+
+@-ms-keyframes pulsing {
+  to {
+    box-shadow: 0 0 0 30px rgba(0, 200, 81, 0);
+  }
+}
+
+@keyframes pulsing {
+  to {
+    box-shadow: 0 0 0 30px rgba(0, 200, 81, 0);
+  }
+}
+</style>
 </head>
 
 <body class="bg-light text-dark" >
@@ -34,11 +96,11 @@
         <div class="col-sm" >
             <div class="jumbotron text-center ">
                 <h1 class="display-1">B U G G I T O</h1>
-                <img src="{% static '/img/logo1.png' %}" alt="logo" width="25%" height="25%">
+                <img src="{% static 'img/logo1.png' %}" alt="logo" width="25%" height="25%">
                 <p class="text-center text-muted"> the tracker you need </p>
                 </br>
                 <p class=" mx-1">Use below to quickly test different accounts</p>
-                <p><button class="btn btn-outline-success" type='button' data-toggle="modal" data-target="#modal_test_log" id="test_login">Log in</button></p>
+                <p><button class="btn btn-outline-success pulsingButton btn-sm" type='button' data-toggle="modal" data-target="#modal_test_log" id="test_login">Log in</button></p>
             </div>
 
         </div>
