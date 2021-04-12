@@ -45,6 +45,10 @@
         
     }
 
+    .ticket {
+        background-color: #ffffff;
+    }
+
     .scrollable {
         margin-bottom: 1em;
         max-height: 35em;
@@ -713,7 +717,7 @@
                                     {% for i in ticket %}
                                         {% if i.assigned_member == request.user.profile %}
                                             {% if i.status == "To Do" %}
-                                            <div class="ticket border bg-light text-dark">
+                                            <div class="ticket border text-dark">
                                                 <h5 class="t_name">{{ i.name }}</h5>
                                                 <p> {{ i.project }}</p>
                                                 <p class='mb-1'>{{i.ticket_deadline}}</p>
@@ -728,7 +732,7 @@
                                     {% for i in ticket %}
                                         {% if i.assigned_member == request.user.profile %}
                                             {% if i.status == "In Progress" %}
-                                            <div class="ticket border bg-light text-dark">
+                                            <div class="ticket border text-dark">
                                                 <h5 class="t_name">{{ i.name }}</h5>
                                                 <p> {{ i.project }}</p>                                                
                                                 <p class='mb-1'>{{i.ticket_deadline}}</p> 
@@ -743,7 +747,7 @@
                                     {% for i in ticket %}
                                         {% if i.assigned_member == request.user.profile %}
                                             {% if i.status == "Done" %}
-                                            <div class="ticket border bg-light text-dark">
+                                            <div class="ticket border text-dark">
                                                 <h5 class="t_name">{{ i.name }}</h5>
                                                 <p> {{ i.project }}</p>
                                                 <p class='mb-1'>{{i.ticket_deadline}}</p>
@@ -767,7 +771,7 @@
                         <!-- Modal -->
             
                 <div class="modal fade w-100" id="modal{{ i.name }}" role="dialog" tabindex="-1"  aria-labelledby="myModalaLabel" aria-hidden="true">
-                    <div class="modal-dialog w-100">
+                    <div class="modal-dialog modal-lg">
                     
                     <!-- Modal content-->
                     <div class="modal-content">
