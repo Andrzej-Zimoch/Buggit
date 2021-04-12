@@ -174,13 +174,14 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 AUTH_PROFILE_MODULE = 'bug.Profile'
 
+DEBUG_PROPAGATE_EXCEPTIONS = True
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
